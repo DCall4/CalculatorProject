@@ -13,6 +13,7 @@ let mulflag = false;
 let divflag = false;
 let operator = '';
 let equalflag = false;
+let decflag = false;
 //screen.classList.add('screen');
 
 numbutts.forEach((button) => {
@@ -23,12 +24,19 @@ numbutts.forEach((button) => {
             firstoperand = 0;
             secondoperand = 0;
             firstophold = 0;
+            addflag = false;
+            subflag = false;
+            mulflag = false;
+            divflag = false;
+            equalflag = false;
+            decflag = false;
             return
         } else if (button.id === ' = ') {
                 secondoperand = parseFloat(answer.textContent);
                 firstoperand = parseFloat(firstophold);
                 firstophold = 0;
                 equalflag = true;
+                decflag = false;
                 //console.log(firstoperand);
                // console.log(secondoperand);
             if (addflag === true){
@@ -62,11 +70,18 @@ numbutts.forEach((button) => {
             button.id === '6' ||
             button.id === '7' ||
             button.id === '8' ||
-            button.id === '9' ||
-            button.id === '.'){
+            button.id === '9' 
+            ) {
                 
                 screen.textContent += button.id;
                 firstophold +=button.id;
+            } else if (button.id === '.'){
+                    if (decflag === false){
+                screen.textContent += button.id;
+                firstophold +=button.id;
+                    };
+                decflag = true;
+                
             } else if (button.id === 'delete') {
                 if (screen.textContent.at(-1) != ' ' ){
                     screen.textContent = screen.textContent.slice(0, -1);
@@ -76,9 +91,9 @@ numbutts.forEach((button) => {
                     return
                 }
             } else if (button.id === ' + '){
-                console.log(firstoperand);
-                secondoperand = firstoperand;
                 
+                secondoperand = firstoperand;
+                decflag = false;
                 answer.textContent = firstoperand;
                 if (equalflag === false){
                     firstoperand = parseFloat(firstophold);
@@ -108,13 +123,13 @@ numbutts.forEach((button) => {
                 equalflag = false;
             } else if (button.id === ' - '){
                 secondoperand = firstoperand;
-                
+                decflag = false;
+                answer.textContent = firstoperand;
                 if (equalflag === false){
                     firstoperand = parseFloat(firstophold);
                     firstophold = 0;
-                    }
+                }
                 screen.textContent += button.id;
-       
                 if (addflag === true){
                     answer.textContent = firstoperand + secondoperand;
                     firstoperand = parseFloat(answer.textContent);
@@ -122,26 +137,31 @@ numbutts.forEach((button) => {
                 } else if (subflag === true){
                     answer.textContent = secondoperand - firstoperand;
                     firstoperand = parseFloat(answer.textContent);
+                    
+                   
                 } else if (mulflag === true){
                     answer.textContent = firstoperand * secondoperand;
                     firstoperand = parseFloat(answer.textContent);
                     mulflag = false;
+                    
                 } else if (divflag === true){
                     answer.textContent = secondoperand / firstoperand;
                     firstoperand = parseFloat(answer.textContent);
                     divflag = false;
+                   
                 } 
                 subflag = true;
                 equalflag = false;
             } else if (button.id === ' * '){
-                secondoperand = firstoperand;
                 
+                secondoperand = firstoperand;
+                decflag = false;
+                answer.textContent = firstoperand;
                 if (equalflag === false){
                     firstoperand = parseFloat(firstophold);
                     firstophold = 0;
-                    }
+                }
                 screen.textContent += button.id;
-                mulflag = true;
                 if (addflag === true){
                     answer.textContent = firstoperand + secondoperand;
                     firstoperand = parseFloat(answer.textContent);
@@ -150,25 +170,29 @@ numbutts.forEach((button) => {
                     answer.textContent = secondoperand - firstoperand;
                     firstoperand = parseFloat(answer.textContent);
                     subflag = false;
+                   
                 } else if (mulflag === true){
                     answer.textContent = firstoperand * secondoperand;
                     firstoperand = parseFloat(answer.textContent);
+                    
+                    
                 } else if (divflag === true){
                     answer.textContent = secondoperand / firstoperand;
                     firstoperand = parseFloat(answer.textContent);
                     divflag = false;
+                   
                 } 
                 mulflag = true;
                 equalflag = false;
             } else if (button.id === ' / '){
                 secondoperand = firstoperand;
-                
+                decflag = false;
+                answer.textContent = firstoperand;
                 if (equalflag === false){
                     firstoperand = parseFloat(firstophold);
                     firstophold = 0;
-                    }
+                }
                 screen.textContent += button.id;
-                divflag = true;
                 if (addflag === true){
                     answer.textContent = firstoperand + secondoperand;
                     firstoperand = parseFloat(answer.textContent);
@@ -177,14 +201,18 @@ numbutts.forEach((button) => {
                     answer.textContent = secondoperand - firstoperand;
                     firstoperand = parseFloat(answer.textContent);
                     subflag = false;
+                   
                 } else if (mulflag === true){
                     answer.textContent = firstoperand * secondoperand;
                     firstoperand = parseFloat(answer.textContent);
                     mulflag = false;
+                    
                 } else if (divflag === true){
                     answer.textContent = secondoperand / firstoperand;
                     firstoperand = parseFloat(answer.textContent);
-                }
+                   
+                   
+                } 
                 divflag = true;
                 equalflag = false;
             } 
